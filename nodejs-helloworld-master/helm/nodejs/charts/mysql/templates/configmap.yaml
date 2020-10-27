@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-initdb-config
+  namespace: "{{ .Values.environment }}"
+data:
+  initdb.sql: |
+    CREATE DATABASE nodejs_helloworld;
+    CREATE USER 'nodejs'@'%' IDENTIFIED WITH mysql_native_password BY 'nodejs_helloworld';
+    GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, INDEX, DROP, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON nodejs_helloworld.* TO 'nodejs'@'%';
+    USE nodejs_helloworld;
+    CREATE TABLE content (id INT, name VARCHAR(256), message VARCHAR(256));
+    INSERT INTO content VALUES (1, 'hello_world', 'Hello World!');

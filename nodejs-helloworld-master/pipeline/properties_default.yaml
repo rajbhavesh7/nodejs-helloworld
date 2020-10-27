@@ -1,0 +1,12 @@
+---
+
+pipeline_job:
+  pipeline_build:
+    job_name: build
+    config_path: pipeline/ci/properties_build.yaml
+  pipeline_publish_artifact:
+    job_name: publish
+    config_path: pipeline/ci/publish/properties_publish_artifact.yaml
+  pipeline_deploy:
+    job_name: deploy
+    config_path: pipeline/cd/properties_deploy.yaml

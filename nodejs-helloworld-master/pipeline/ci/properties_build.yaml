@@ -1,0 +1,8 @@
+---
+
+pipeline:
+  stages:
+    build:
+      status: enabled
+      cmd_name: 'docker'
+      cmd_args: 'build -t nodejs_helloworld .'

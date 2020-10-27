@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs
+  labels:
+    app: nodejs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs
+  template:
+    metadata:
+      labels:
+        app: nodejs
+    spec:
+      containers:
+        - image: nodejs_helloworld
+          name: nodejs
+          imagePullPolicy: Never
+          env:
+            - name: MYSQL_HOST
+              value: "mysql"
+            - name: MYSQL_DB
+              value: "nodejs_helloworld"
+            - name: MYSQL_USER
+              value: "nodejs"
+            - name: MYSQL_PASS
+              value: "nodejs_helloworld"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs
+  labels:
+    app: nodejs
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3000
+  selector:
+    app: nodejs
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nodejs
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: nodejs
+              servicePort: 3000

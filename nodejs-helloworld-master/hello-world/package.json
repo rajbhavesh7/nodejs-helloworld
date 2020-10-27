@@ -1,0 +1,23 @@
+{
+  "name": "hello-world",
+  "version": "1.0.0",
+  "description": "Hello World application that fetches message from a database.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/umairadeeb/nodejs-helloworld.git"
+  },
+  "author": "Umair",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/umairadeeb/nodejs-helloworld/issues"
+  },
+  "homepage": "https://github.com/umairadeeb/nodejs-helloworld#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  }
+}

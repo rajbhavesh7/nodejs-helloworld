@@ -1,0 +1,6 @@
+---
+
+pipeline:
+  stages:
+    deploy:
+      status: enabled

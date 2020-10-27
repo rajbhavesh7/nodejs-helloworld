@@ -1,0 +1,61 @@
+---
+unclassified:
+  location:
+    url: http://localhost/jenkins
+  globalLibraries:
+    libraries:
+      - name: "shared_library"
+        defaultVersion: "master"
+        implicit: true
+        retriever:
+          modernSCM:
+            scm:
+              github:
+                #id: "8704a675-abdf-4574-bda3-ff9bec3c7730"
+                repoOwner: "rajbhavesh7"
+                repository: "jenkins-shared-library"
+                traits:
+                  - gitHubBranchDiscovery:
+                      strategyId: 1
+                  - gitHubPullRequestDiscovery:
+                      strategyId: 1
+                  - gitHubForkDiscovery:
+                      strategyId: 1
+jenkins:
+  slaveAgentPort: 30005
+  nodes:
+    - permanent:
+        name: "parent"
+        labelString: "parent"
+        remoteFS: "jenkins"
+        launcher:
+          jnlp:
+            workDirSettings:
+              disabled: true
+              failIfWorkDirIsMissing: false
+              internalDir: "remoting"
+              workDirPath: "/tmp"
+  systemMessage: "Jenkins for NodeJS App."
+security:
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: false
+jobs:
+  - script: >
+      freeStyleJob("Seed Job") {
+        triggers {
+            hudsonStartupTrigger {
+              quietPeriod("60")
+              runOnChoice("ON_CONNECT")
+              label("")
+              nodeParameterName("")
+            }
+        }
+        scm {
+          github('rajbhavesh7/nodejs-helloworld', 'master')
+        }
+        steps {
+          dsl {
+            external('jenkins/jobs/*.groovy')
+          }
+        }
+      }
